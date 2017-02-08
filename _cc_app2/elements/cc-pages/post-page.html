@@ -1,0 +1,84 @@
+<!doctype html>
+<link rel="import" href="../../bower_components/iron-ajax/iron-ajax.html">
+
+<dom-module id="post-page">
+
+  <template>
+<script>console.log('post-page loaded');</script>
+    <style>
+      :host {
+        display: none;
+      }
+
+      :host([active]) {
+        display: block;
+      }
+
+      p {
+        line-height: 33.18px;
+        white-space: pre-wrap;
+      }
+    </style>
+<div>[[_logme(post)]]</div>
+    <iron-ajax
+      auto
+      url="[[_computeURL(post)]]"
+      handle-as="json"
+      last-response="{{postContent}}">
+    </iron-ajax>
+
+    <div>[[_logme(postContent)]]</div>
+
+    <h2>[[postContent.title]]</h2>
+    <p>[[postContent.intro_text]]</p>
+    <!--<img src="[[postContent.img]]" alt="[[postContent.img_alt]]" />-->
+    <p>[[postContent.body_text]]</p>
+
+  </template>
+
+  <script>
+    Polymer({
+
+      is: 'post-page',
+
+      properties: {
+
+        active: {
+          type: Boolean,
+          value: false,
+          reflectToAttribute: true
+        }
+
+      },
+      postContent:{
+        title: "A title",
+        intro_text: "Intro",
+        body_text: "Body"
+      },
+      created: function(){
+        console.log("postpage created");
+      },
+      ready: function(){
+        console.log("postpage ready");
+        console.log(this.post);
+      },
+      attached: function(){
+        console.log('postpage attached');
+        console.log(this.post);
+      },
+
+      _computeURL: function(post) {
+        console.log('computeURL');
+        console.log('data/posts/'+post+'.json');
+        return `data/posts/${post}.json`;
+      },
+      _logme:function(obj){
+        console.log('logme from postpage');
+        console.log(obj);
+        return "logged";
+      }
+
+    });
+  </script>
+
+</dom-module>

@@ -1,0 +1,75 @@
+<!doctype html>
+<link rel="import" href="../../bower_components/iron-ajax/iron-ajax.html">
+<link rel="import" href="../html-echo/html-echo.html">
+<dom-module id="cc-page-view">
+  <template>
+      <style include="shared-styles"></style>
+    <style>
+      :host {
+        display: none;
+      }
+
+      :host([active]) {
+        display: block;
+      }
+
+    </style>
+<div>{{_logme(post)}}</div>
+    <iron-ajax
+      auto
+      url="{{_computeURL(post)}}"
+      handle-as="json"
+      last-response="{{pageContent}}">
+    </iron-ajax>
+
+
+    <!--<h2>[[pageContent.title]]</h2>
+    <p>[[postContent.intro_text]]</p>
+    <img src="[[postContent.img]]" alt="[[postContent.img_alt]]" />
+    <p>[[postContent.body_text]]</p>-->
+
+    <paper-material elevation="1">
+      <h1 class="page-title" tabindex="-1">[[pageContent.title]]</h1>
+              <html-echo html-data="{{pageContent.body_text}}"></html-echo>
+    </paper-material>
+
+    <div>{{_logme(pageContent)}}</div>
+
+
+  </template>
+
+  <script>
+    Polymer({
+
+      is: 'cc-page-view',
+
+      properties: {
+
+        active: {
+          type: Boolean,
+          value: false,
+          reflectToAttribute: true
+        }
+
+      },
+
+      _computeURL: function(post) {
+        console.log('_computeURL cc-page-view');
+        console.log(post);
+        console.log(`data/pages/${post}.json`);
+        return `data/pages/${post}.json`;
+      },
+      _logme:function(obj,obj2){
+        console.log('logme from cc-page-view');
+        if(obj2 === undefined){
+          console.log(obj);
+        }else {
+          console.log(obj+obj2);
+        }
+        return "logged";
+      }
+
+    });
+  </script>
+
+</dom-module>

@@ -1,0 +1,81 @@
+<!doctype html>
+<link rel="import" href="../../bower_components/app-route/app-route.html">
+<link rel="import" href="cc-page-view.html">
+<link rel="import" href="list-page.html">
+<link rel="import" href="post-page.html">
+<script>console.log("cc-pages loaded");</script>
+<dom-module id="cc-pages">
+
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+    </style>
+
+    <app-route
+      route="{{route}}"
+      pattern="/:page"
+      active="{{pageActive}}"
+      data="{{pagedata}}"
+      tail="{{subrouteData}}">
+    </app-route>
+
+    <app-route
+      route="{{route}}"
+      pattern="/blog/:category"
+      data="{{categoryData}}"
+      tail="{{categorySubrouteData}}">
+    </app-route>
+{{_logme(categorySubrouteData)}}
+{{_logme(categoryData.category)}}
+<!--/*******
+Test subroutes,
+*************/-->
+    <app-route route="{{categorySubrouteData}}"
+                  pattern="/list"
+                  active="{{listActive}}">
+    </app-route>
+    <app-route route="{{categorySubrouteData}}"
+                  pattern="/posts/:slug"
+                  active="{{postsActive}}"
+                  data="{{postsData}}">
+    </app-route>
+<!--/**********
+End subroutes
+********************/-->
+
+    {{_logme(listActive,"LISTACTIVE######HERE")}}
+    {{_logme(postsActive,"POSTSACTIVE########HERE")}}
+    {{_logme(pageActive,"PAGEACTIVE##########HERE")}}
+    <!--{{_logme(postsData.slug)}}-->
+    <cc-page-view post="{{pagedata.page}}"
+               active="{{pageActive}}">
+    </cc-page-view>
+    <!--<list-page category="{{categoryData.category}}"
+           active="{{listActive}}">
+    </list-page>
+
+    <post-page post="{{postsData.slug}}"
+               active="{{postsActive}}">
+    </post-page>-->
+
+  </template>
+
+  <script>
+    Polymer({
+      is: 'cc-pages',
+      properties:{},
+      _logme:function(obj,obj2){
+        console.log('logme from cc-pages');
+        if(obj2 === undefined){
+          console.log(obj);
+        }else {
+          console.log(obj+obj2);
+        }
+        return "logged";
+      }
+    });
+  </script>
+
+</dom-module>

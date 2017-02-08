@@ -1,0 +1,49 @@
+<!doctype html>
+<link rel="import" href="../../bower_components/app-route/app-route.html">
+<!--<link rel="import" href="cc-page-view.html">-->
+<!--<link rel="import" href="list-page.html">
+<link rel="import" href="post-page.html">-->
+<script>console.log("cc-pages loaded");</script>
+<dom-module id="cc-pages">
+
+  <template>
+
+    <style>
+      :host {
+        display: block;
+      }
+    </style>
+
+    <!--<app-route route="{{route}}"
+                  pattern="/"
+                  active="{{listActive}}">
+    </app-route>
+    <app-route route="{{route}}"
+                  pattern="/posts/:slug"
+                  active="{{postsActive}}"
+                  data="{{postsData}}">
+    </app-route>-->
+    <!--<cc-page-view post="{{category}}"
+               active="{{postsActive}}">
+    </cc-page-view>-->
+    <!--<list-page fuckoff="{{postsData.slug}}"
+           active="{{postsActive}}">
+    </list-page>-->
+    <!--<post-page post="{{postsData.slug}}"
+               active="{{postsActive}}">
+    </post-page>-->
+
+  </template>
+
+  <script>
+    Polymer({
+      is: 'cc-pages',
+      properties:{},
+      _logme:function(obj){
+        console.log(obj);
+        return "logged";
+      }
+    });
+  </script>
+
+</dom-module>

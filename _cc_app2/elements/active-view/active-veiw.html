@@ -1,0 +1,73 @@
+<!doctype html>
+<link rel="import" href="../../bower_components/app-route/app-route.html">
+<!--<link rel="import" href="cc-page-view.html">-->
+<link rel="import" href="list-page.html">
+<link rel="import" href="post-page.html">
+<script>console.log("cc-pages loaded");</script>
+<dom-module id="cc-pages">
+
+  <template>
+    <app-route route="{{route}}"
+                  pattern="/:params"
+                  active="{{toggleObj('home').active}}"
+                  data="{{homeData}}">
+    </app-route>
+  </template>
+
+  <script>
+  (function() {
+    'use strict';
+
+    Polymer({
+      is: 'active-view',
+
+      properties: {
+        views: {
+          type: Object,
+          notify: true
+        },
+        viewConfig: {
+          /********************************************
+            looks like
+            view-config='{
+              "viewname1":{
+                "match":"/:page/action",
+                //uri remainder will always be tacked on
+                //as the tail. Multiple roots can active at
+                //same time. View is handler and can state for
+                //split view and multi-component, may also have
+                //multi-nav selections, multi-view in current component
+                //makes current component like controller. if active is
+                //set on app-route then we need all matches = active,
+                //any who is in path should be active, controller/component
+                //should handle veiw state.
+                selections:{
+                  //In case you need multiple selection
+                  "namespace1":"selectedattributtext",
+                  "namespace2":"selection2"
+                },
+                "is_multi_view_safe":"true",
+                "view_priority_level":"-1" //-1 is fifo
+              },
+
+            }'
+          ***********************/
+          type: Object,
+          notify:true
+        }
+
+      },
+      _logme:function(obj,obj2){
+        console.log('logme from cc-pages');
+        if(obj2 === undefined){
+          console.log(obj);
+        }else {
+          console.log(obj+obj2);
+        }
+        return "logged";
+      }
+    });
+  )();
+  </script>
+
+</dom-module>
