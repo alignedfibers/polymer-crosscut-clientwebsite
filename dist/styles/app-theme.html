@@ -1,4 +1,4 @@
-<link rel="import" href="../bower_components/polymer/polymer.html"><link rel="import" href="../bower_components/paper-styles/typography.html"><link rel="import" href="../bower_components/paper-styles/color.html"><style is="custom-style">
+<!doctype html><link rel="import" href="../bower_components/polymer/polymer.html"><link rel="import" href="../bower_components/paper-styles/typography.html"><link rel="import" href="../bower_components/paper-styles/color.html"><style is="custom-style">
 
   /*
    Polymer includes a shim for CSS Custom Properties that we can use for application theming.
@@ -23,14 +23,14 @@
     --accent-color: var(--paper-pink-a200);
     --light-accent-color: var(--paper-pink-a100);
     --dark-accent-color: var(--paper-pink-a400);
-
+    --paper-toolbar-background: rgba(40, 87, 40, 1);
     /* Components */
-
+    --paper-toolbar-height: 45px;
     /* paper-drawer-panel */
     --drawer-menu-color: #ffffff;
     --drawer-border-color: 1px solid #ccc;
     --drawer-toolbar-border-color: 1px solid rgba(0, 0, 0, 0.22);
-
+    --js-updated-outro-bottom = 0px;
     /* paper-menu */
     --paper-menu-background-color: #fff;
     --menu-link-color: #111111;
@@ -39,8 +39,13 @@
   /* General styles */
 
   body {
-    @apply(--layout-fullbleed);
-    @apply(--layout-vertical);
+    display:block;
+    height:auto;
+  }
+  body:after{
+    display:block;
+    clear:both;
+    position:relative;
   }
 
   .space {
@@ -93,8 +98,20 @@
   }
 
   #mainToolbar.tall .app-name {
-    font-size: 40px;
-    font-weight: 300;
+    //font-size: 40px;
+    //font-weight: 300;
+    /**********************************************
+        This is the header text at top the page
+    ***********************************************/
+    display:block;
+    min-height:100%;
+    width:100%;
+    margin-left:0px;
+    margin-right:0px;
+    padding:0px;
+    //margin-top:.10.24px !important;
+    //margin-bottom:10.24px !important;
+    background-color: rgba(255, 255, 255, .4);
     /* Required for main area's paper-scroll-header-panel custom condensing transformation */
     -webkit-transform-origin: left center;
     transform-origin: left center;
@@ -104,6 +121,10 @@
   #mainToolbar .bottom-container {
     @apply(--layout-horizontal);
     @apply(--layout-center);
+  }
+  #mainToolbar .cchead-txt{
+    //@apply(--layout-horizontal);
+    //@apply(--layout-center);
   }
 
   #mainToolbar .middle-container  {
@@ -123,6 +144,54 @@
     /* Required for main area's paper-scroll-header-panel custom condensing transformation */
     -webkit-transform-origin: left center;
     transform-origin: left center;
+  }
+  #mainToolbar .cchead-txt{
+    //@apply(--paper-font-subhead);
+	font: 40px 'Arizonia', Helvetica, sans-serif;
+    font-weight: 100;
+	color: #4c4c4c; //#000;//#4c4c4c;//#fff;//rgba(100, 256, 100, .6);
+	//text-shadow: 1px 1px 3px rgba(100, 256, 100, .6);/; //rgba(100, 256, 100, .6);//rgba(0, 0, 0, 1); // rgba(255, 255, 255, 1);
+    //margin-left: 0px;
+    /* Required for main area's paper-scroll-header-panel custom condensing transformation */
+    -webkit-transform-origin: left center;
+    transform-origin: left center;
+  }
+  #companyTitle .cc-name{
+    //@apply(--paper-font-subhead);
+    display:block;
+    position:static;
+    position:fixed;
+    top:0px;
+    left:0px;
+    right:0px;
+    //z-index: 5001;
+    //border: solid rgba(255,255,255,2) 100px;
+    width:99%;
+overflow-x:hidden;
+
+    height:auto;
+    margin-top:10.24px;
+    margin-bottom:10.24px;
+    //margin-right:25px;
+    //padding-right:25px;
+    //margin-left:32px;
+	font: 40px 'Arizonia', Helvetica, sans-serif;
+    font-weight: 100;
+	color: #4c4c4c; //#000;//#4c4c4c;//#fff;//rgba(100, 256, 100, .6);
+    background-color: rgba(255, 255, 255, .4);
+	//text-shadow: 1px 1px 3px rgba(100, 256, 100, .6);/; //rgba(100, 256, 100, .6);//rgba(0, 0, 0, 1); // rgba(255, 255, 255, 1);
+    //margin-left: 0px;
+    /* Required for main area's paper-scroll-header-panel custom condensing transformation */
+    //-webkit-transform-origin: left center;
+    //transform-origin: left center;
+  }
+  #companyTitle .cc-name>text{
+    margin-left:16px;
+    border:solid red;
+  }
+  #companyTitle .cc-name::-webkit-scrollbar {
+    display:none;
+
   }
 
   /* Height of the scroll area */
@@ -164,8 +233,8 @@
     }
 
     #mainToolbar.tall .app-name {
-      font-size: 24px;
-      font-weight: 400;
+      //font-size: 24px;
+      //font-weight: 400;
     }
 
     paper-material {

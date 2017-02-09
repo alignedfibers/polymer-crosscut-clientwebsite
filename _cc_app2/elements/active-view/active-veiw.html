@@ -7,24 +7,32 @@
   <template>
     <app-route route=     "{{route}}"
                pattern=   "/"
-               active=    "{{  setActive('home_view').active  }}"
-               data=      "{{  setData('home_view').data  }}"
-               tail=      "{{  setTail('home_view').tail  }}"
-               selections="{{  addSelections('home_view',{homecandy:true})  }}">
+               active=    "{{  getView('home_view').active  }}"
+               data=      "{{  getView('home_view').data  }}"
+               tail=      "{{  getView('home_view').tail  }}"
+               selections="{{  addSelections('home_view',['homecandy'])  }}">
     </app-route>
     <app-route route=     "{{route}}"
                pattern=   "/search/:extra"
-               active=    "{{  setActive('item_list_view').active  }}"
-               data=      "{{  setData('item_list_view').data  }}"
-               tail=      "{{  setTail('item_list_view').tail  }}"
-               selections="{{  addSelections('item_list_view',{searchcandy:true})  }}">
+               active=    "{{  getView('item_list_view').active  }}"
+               data=      "{{  getView('item_list_view').data  }}"
+               tail=      "{{  getView('item_list_view').tail  }}"
+               selections="{{  addSelections('item_list_view',['searchcandy'])  }}">
     </app-route>
     <app-route route=     "{{route}}"
                pattern=   "/recent:extra"
-               active=    "{{  setActive('item_list_view').active  }}"
-               data=      "{{  setData('item_list_view').data  }}"
-               tail=      "{{  setTail('item_list_view').tail  }}"
-               selections="{{  addSelections('item_list_view',{recentcandy:true})  }}"
+               active=    "{{  getView('item_list_view').active  }}"
+               data=      "{{  getView('item_list_view').data  }}"
+               tail=      "{{  getView('item_list_view').tail  }}"
+               selections="{{  addSelections('item_list_view',['recentcandy'])  }}"
+               defaultroute="{{ setDefaultRoute('/history')}}">
+    </app-route>
+    <app-route route=     "{{route}}"
+               pattern=   "/:listview/detail/:extra"
+               active=    "{{  getView('item_detail_view').active  }}"
+               data=      "{{  getView('item_detail_view').data  }}"
+               tail=      "{{  getView('item_detail_view').tail  }}"
+               selections="{{  addSelections('item_detail_view',['detailcharms'])  }}"
                defaultroute="{{ setDefaultRoute('/history')}}">
     </app-route>
     <!-- the last one here will provide a falsy value, then after all elements in this
@@ -57,10 +65,10 @@
     -->
     <app-route route=     "{{_prependActiveCount(route)}}"
                pattern=   "/0/:extra"
-               active=    "{{  setActive('404_handler').active  }}"
-               data=      "{{  setData('404_handler').data  }}"
-               tail=      "{{  setTail('404_handler').tail  }}"
-               selections="{{  addSelections('404_handler',{failanimation:true})  }}">
+               active=    "{{  getView('404_handler').active  }}"
+               data=      "{{  getView('404_handler').data  }}"
+               tail=      "{{  getView('404_handler').tail  }}"
+               selections="{{  addSelections('404_handler',['failanimation'])  }}">
     </app-route>
 
   </template>
@@ -89,15 +97,44 @@
           /********************************************
           ***********************/
       },
-      _setActive:function(name){
-        if(typeof this.allViews[name] != 'object'){
-          this.allViews[name] = {};
-          this.allViews[name].active = false;
+      getView:function(name){
+        var this_view = this.allViews[name];
+        var that = this;
+        if(typeof this_view != 'object'){
+          this_view = (function(){
+            var active = false, data = null, tail = null;
+            return { 
+              active:{
+                get: function(){return active},
+                set: function(boolVal){
+                  if(active !== boolVal){
+                    that.totalActive = (that.totalActive + (boolVal ? 1 : -1));
+                  }
+                  active=boolVal;
+                }
+              },
+              data:{
+                get: function(){return data},
+                set: function(matched){data=matched}
+              },
+              tail:{
+                get: function(){return tail},
+                set: function(subroute){tail=subroute}
+              }
+            }
+          })();
         }
-        return this.allViews[name];
+        return this_view;
+      },
+      addSelections:function(viewName,selections){
+        var view = this.getView(viewName);
+        if(typeof view.selections !== 'object'){
+          view.selections = {};
+        }
+        view.selections = Object.assign(view.selections,selections);
       },
       _prependActiveCountToRoute:function(route){
-        var new_route = = Object.assign({},route);
+        var new_route = Object.assign({},route);
         new_route.path = this.totalActive+"/"+new_route.path;
         console.log(new_route);
       },
