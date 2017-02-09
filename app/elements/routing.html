@@ -2,7 +2,7 @@
 <script src="../bower_components/page/page.js"></script>
 <script>
   window.addEventListener('WebComponentsReady', function() {
-    if (window.location.port === '' || window.location.port === '31999') {  // if production
+    if (window.location.port === '' || window.location.port === '31999' || window.location.port === '5000') {  // if production
       page.base(app.baseUrl.replace(/\/$/, ''));
     }
 
