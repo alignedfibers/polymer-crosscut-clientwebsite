@@ -12,7 +12,8 @@
         display: block;
       }
     </style>
-
+{{_logme('before route _testclone')}}
+{{_testClone(route)}}
     <app-route
       route="{{route}}"
       pattern="/:page"
@@ -27,8 +28,8 @@
       data="{{categoryData}}"
       tail="{{categorySubrouteData}}">
     </app-route>
-{{_logme(categorySubrouteData)}}
-{{_logme(categoryData.category)}}
+<!--{{_logme(categorySubrouteData)}}
+{{_logme(categoryData.category)}}-->
 <!--/*******
 Test subroutes,
 *************/-->
@@ -45,21 +46,21 @@ Test subroutes,
 End subroutes
 ********************/-->
 
-    {{_logme(listActive,"LISTACTIVE######HERE")}}
+    <!--{{_logme(listActive,"LISTACTIVE######HERE")}}
     {{_logme(postsActive,"POSTSACTIVE########HERE")}}
     {{_logme(pageActive,"PAGEACTIVE##########HERE")}}
     <!--{{_logme(postsData.slug)}}-->
-    <cc-page-view post="{{pagedata.page}}"
-               active="{{pageActive}}">
-    </cc-page-view>
-    <!--<list-page category="{{categoryData.category}}"
+    <list-page category="{{categoryData.category}}"
            active="{{listActive}}">
     </list-page>
 
     <post-page post="{{postsData.slug}}"
                active="{{postsActive}}">
-    </post-page>-->
+    </post-page>
 
+    <cc-page-view post="{{pagedata.page}}"
+               active="{{pageActive}}">
+    </cc-page-view>
   </template>
 
   <script>
@@ -74,7 +75,14 @@ End subroutes
           console.log(obj+obj2);
         }
         return "logged";
-      }
+      },
+     _testClone: function(route) {
+       console.log(route);
+       var copy_route = Object.assign({},route);
+       copy_route.path = "/0"+copy_route.path;
+       console.log(copy_route);
+       return copy_route;
+     }
     });
   </script>
 

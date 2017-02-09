@@ -1,17 +1,68 @@
 <!doctype html>
 <link rel="import" href="../../bower_components/app-route/app-route.html">
 <!--<link rel="import" href="cc-page-view.html">-->
-<link rel="import" href="list-page.html">
-<link rel="import" href="post-page.html">
-<script>console.log("cc-pages loaded");</script>
-<dom-module id="cc-pages">
+<script>console.log("active-view loaded");</script>
+<dom-module id="active-view">
 
   <template>
-    <app-route route="{{route}}"
-                  pattern="/:params"
-                  active="{{toggleObj('home').active}}"
-                  data="{{homeData}}">
+    <app-route route=     "{{route}}"
+               pattern=   "/"
+               active=    "{{  setActive('home_view').active  }}"
+               data=      "{{  setData('home_view').data  }}"
+               tail=      "{{  setTail('home_view').tail  }}"
+               selections="{{  addSelections('home_view',{homecandy:true})  }}">
     </app-route>
+    <app-route route=     "{{route}}"
+               pattern=   "/search/:extra"
+               active=    "{{  setActive('item_list_view').active  }}"
+               data=      "{{  setData('item_list_view').data  }}"
+               tail=      "{{  setTail('item_list_view').tail  }}"
+               selections="{{  addSelections('item_list_view',{searchcandy:true})  }}">
+    </app-route>
+    <app-route route=     "{{route}}"
+               pattern=   "/recent:extra"
+               active=    "{{  setActive('item_list_view').active  }}"
+               data=      "{{  setData('item_list_view').data  }}"
+               tail=      "{{  setTail('item_list_view').tail  }}"
+               selections="{{  addSelections('item_list_view',{recentcandy:true})  }}"
+               defaultroute="{{ setDefaultRoute('/history')}}">
+    </app-route>
+    <!-- the last one here will provide a falsy value, then after all elements in this
+         component have readied and attached and this component is ready, we will prepend
+         the "control route" with the number of active routes. active routes count starts at
+         neg(1). Route information will be a property on the binded handlerview in the attrib.
+         When two or more routes match, it is ideal for the component to which is listening
+         for matches to be well planned and to have a method to show the views it serves.
+         a view will be able to impliment this element and create views of its own, note:
+         it appears that <app-route> updates whenever it's route passed in updates, at this
+         point I believe the changes are chained bidrectionally, and no one rule contains
+         the prototype of all the rules that proceded it, just containing the result data
+         object, thus we can assuredly assume the position in line, where routes will be
+         updated. Though the ability to make the assumption on where routes will be matched
+         is helpful, we should not be dependent on that sequence. (This reminds me of an
+         htaccess redirect loop) 2 or more veiws are possible to handle at one time, these
+         two views should be binded so that they can communicate, often one view will request
+         to show a subview with details, and update the uri to an acceptable reload uri,
+         thus maintaining the view state with the uri across reloads. To avoid collisions,
+         or unexpected views fighting for the foreground, each view def can be directly registered
+         (recommended preroute) with meta data listing friendly views, when the active view index
+         lists an unfriendly view at route check / setActive time, we can push the location for
+         the current hot route prefix, but may cause further issues. This situation happens when
+         you are currently viewing a "ContactPageView" but that view has no idea what information
+         it should be sharing with "DetailView" and someone accidentally or does enter a match
+         for both views in the uri path. My recommendation is to provide a toast and to
+         default to route based on the defaultRoute set when the path was matched, record the
+         redirect, and force stop for redirectloop, toast and redirect to default home, explaining
+         to that there has been a routing error, please try again or contact administator.
+    -->
+    <app-route route=     "{{_prependActiveCount(route)}}"
+               pattern=   "/0/:extra"
+               active=    "{{  setActive('404_handler').active  }}"
+               data=      "{{  setData('404_handler').data  }}"
+               tail=      "{{  setTail('404_handler').tail  }}"
+               selections="{{  addSelections('404_handler',{failanimation:true})  }}">
+    </app-route>
+
   </template>
 
   <script>
@@ -20,42 +71,35 @@
 
     Polymer({
       is: 'active-view',
-
       properties: {
-        views: {
+        totalActive:{
+          type:Number,
+          value:"",
+          notify:true
+        },
+        allViews: {
           type: Object,
           notify: true
         },
         viewConfig: {
-          /********************************************
-            looks like
-            view-config='{
-              "viewname1":{
-                "match":"/:page/action",
-                //uri remainder will always be tacked on
-                //as the tail. Multiple roots can active at
-                //same time. View is handler and can state for
-                //split view and multi-component, may also have
-                //multi-nav selections, multi-view in current component
-                //makes current component like controller. if active is
-                //set on app-route then we need all matches = active,
-                //any who is in path should be active, controller/component
-                //should handle veiw state.
-                selections:{
-                  //In case you need multiple selection
-                  "namespace1":"selectedattributtext",
-                  "namespace2":"selection2"
-                },
-                "is_multi_view_safe":"true",
-                "view_priority_level":"-1" //-1 is fifo
-              },
-
-            }'
-          ***********************/
           type: Object,
-          notify:true
+          value: {},
+          observer: 'buildViewDescribers'
         }
-
+          /********************************************
+          ***********************/
+      },
+      _setActive:function(name){
+        if(typeof this.allViews[name] != 'object'){
+          this.allViews[name] = {};
+          this.allViews[name].active = false;
+        }
+        return this.allViews[name];
+      },
+      _prependActiveCountToRoute:function(route){
+        var new_route = = Object.assign({},route);
+        new_route.path = this.totalActive+"/"+new_route.path;
+        console.log(new_route);
       },
       _logme:function(obj,obj2){
         console.log('logme from cc-pages');
