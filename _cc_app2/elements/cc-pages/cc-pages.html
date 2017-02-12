@@ -14,6 +14,7 @@
     </style>
 {{_logme('before route _testclone')}}
 {{_testClone(route)}}
+{{_logme(testvalue)}}
     <app-route
       route="{{route}}"
       pattern="/:page"
@@ -27,6 +28,12 @@
       pattern="/blog/:category"
       data="{{categoryData}}"
       tail="{{categorySubrouteData}}">
+    </app-route>
+    <app-route
+      route="{{route}}"
+      pattern="/blog/:other"
+      data="{{testprop.deeper.data}}"
+      tail="{{testprop.deeper.tail}}">
     </app-route>
 <!--{{_logme(categorySubrouteData)}}
 {{_logme(categoryData.category)}}-->
@@ -66,7 +73,16 @@ End subroutes
   <script>
     Polymer({
       is: 'cc-pages',
-      properties:{},
+      properties:{
+        testprop:{
+          type:Object,
+          value:{subroute:null,active:false,data:null,deeper:{}},
+        },
+        testvalue:{a:"This is the test value outside of properties"},
+      },
+      observers:[
+        '_logtestprop( testprop.* )'
+      ],
       _logme:function(obj,obj2){
         console.log('logme from cc-pages');
         if(obj2 === undefined){
@@ -75,6 +91,12 @@ End subroutes
           console.log(obj+obj2);
         }
         return "logged";
+      },
+      _logtestprop: function(changeRec){
+        console.log("logtestprop running");
+        console.log(changeRec);
+        this.notifyPath('changeRec.path');
+        //console.log(oldVal);
       },
      _testClone: function(route) {
        console.log(route);

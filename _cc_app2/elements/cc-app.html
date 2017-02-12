@@ -92,9 +92,10 @@
         <!--<div>{{ _logme2(postsData) }}</div>
         <div>{{ _logme2(postsActive) }}</div>-->
         <main>
-        <cc-pages route="{{route}}" pagedata="{{pageData}}"></cc-pages>
+        <cc-pages route="{{route}}" pagedata="{{pageData}}" testprop="{{getForReal}}"></cc-pages>
 
       </main>
+      {{_logme2(getForReal)}}
 <!--#################
         <div class="content" id="page-container" style="">
           <iron-pages attr-for-selected="data-route" selected="[[pageData.page]]" style="z-index:70">

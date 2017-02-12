@@ -85,17 +85,24 @@
           value:"",
           notify:true
         },
-        allViews: {
+        liveViews: {
           type: Object,
+          readOnly: true,
           notify: true
         },
         viewConfig: {
           type: Object,
           value: {},
-          observer: 'buildViewDescribers'
         }
           /********************************************
           ***********************/
+      },
+      observers:[
+        '_viewStateChanged( liveViews.* )',
+        '_rebuildViews(viewConfig.*)'
+      ],
+      viewStateChanged: function(changeRecord){
+        
       },
       getView:function(name){
         var this_view = this.allViews[name];
@@ -103,7 +110,7 @@
         if(typeof this_view != 'object'){
           this_view = (function(){
             var active = false, data = null, tail = null;
-            return { 
+            return {
               active:{
                 get: function(){return active},
                 set: function(boolVal){
