@@ -1,0 +1,16 @@
+I believe the best way to do this is to have a mergeToProperty() function you can call.
+
+It would be something like
+
+element.deepCallback(function(){host.property = object.assign(function convertValToObj(val){return {value:val;} , host.property)});`
+Then afterwords, you will have to call notifyAll, you may have some other steps required if observing multiple deep properies outside of this element. notifyPath will not work. notifyAll may cause a dirty check worthy of performance consideration in this situation.
+
+If only a function such as just notify() would allow me to pass array of objects for props I changed, where each object looks like [this is specifically for deep property groups, that have some relationship where they should propagate as a group, such as waiting for a promise to resolve, observers for all of these deep properties (their parent being the property group key/name) would be called in one big swoop, on a single event, and those observers would handle as if called individually, (Deep observer could possibly copy to new properties as a new object, or as reference. if it likes) The group property notify should be able to propogate and be handled by all observers of the group property itself, deep bindings can cause a lot of confusing, I would like to change that, such that the developer of element, can continue propogation from within and observer to a different public_facing property. Having public facing property groups is also a good option for testing and integration - consider redux that can give a greater view of application state in one place so to can group properties provide some related states as properties, making it easy to hook an integration test without writing multiple bindings. (Could use something more than retargeting here). So this is why this should be added if of course it does not already exist, and I believe it will help with the setMultipleProperties issue as well, some of the base functions to make this work are easily adapted for the setMultipleProperties case as well]
+The object layout I propose to pass for each property in the property group we would like propagate:
+{
+prop.path:'/sompath', /Path changes as propagated, no idea how to do this yet/
+propagate_as_independent_change:false,
+continue_to_propagate_with_this_group: /false=fullstop, true=surviving member of group moves on/
+}
+
+Please advise if there is already a solution to this, not sure if my approach is the best.

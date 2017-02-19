@@ -51,31 +51,7 @@ div#page-container{
         margin: 0px !important;
         height:auto !important;
 }
-div#companyname{
-        /**********************************************
-            This is the header text at top the page
-        ***********************************************/
-        display:block;
-        position: fixed;
-        z-index:109 !important;
-        top:0px;
-        left:0px;
-        width: -webkit-calc(100% - 0px);
-        width:calc(100% - 0px);
-        height:42px;
-        margin-top:10.24px;
-        margin-bottom:10.24px;
-        font: 40px 'Arizonia', Helvetica, sans-serif;
-        font-weight: 100;
-        color: #4c4c4c;
-        background-color: rgba(255, 255, 255, .4);
-  -o-transition:background-color .2s ease-out, background-color 1s ease-in;
-  -ms-transition:background-color .2s ease-out, background-color 1s ease-in;
-  -moz-transition:background-color .2s ease-out, background-color 1s ease-in;
-  -webkit-transition:background-color .2s ease-out, background-color 1s ease-in;
-  transition:background-color .2s ease-out, background-color 1s ease-in;
-        height:auto;
-        }
+
 div#outro{
         /**********************************************
             This is the header text at top the page

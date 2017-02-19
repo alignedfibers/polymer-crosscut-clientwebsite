@@ -91,11 +91,12 @@
         </app-route> -->
         <!--<div>{{ _logme2(postsData) }}</div>
         <div>{{ _logme2(postsActive) }}</div>-->
+        {{getForReal.deeper.data.other}}
         <main>
         <cc-pages route="{{route}}" pagedata="{{pageData}}" testprop="{{getForReal}}"></cc-pages>
 
       </main>
-      {{_logme2(getForReal)}}
+      {{_logme2(getForReal.deeper)}}
 <!--#################
         <div class="content" id="page-container" style="">
           <iron-pages attr-for-selected="data-route" selected="[[pageData.page]]" style="z-index:70">
@@ -218,23 +219,39 @@
           type: Object,
           value: {name:'guest',group:'guest'},
           notify: true
+        },
+        getForReal:{
+          type:Object
         }
       },
+      observers:[
+        '_logGetForReal( getForReal.* )'
+      ],
       count: 0,
       mycat:{},
       somedata: "printsomething",
       baseUrl: '/',
+      _logGetForReal:function(changeRecord){
+        console.log("from logGetForReal ####GETREAL");
+        console.log(changeRecord);
+        console.log("end log get for real ####GETREALEND");
+        //this.notifyPath('getForReal.deeper');
+        //this.notifyPath('getForReal');
+      },
       created: function(){
         console.log("created");
+        //console.log(this.getForReal);
       },
       ready: function(){
         console.log("ready");
+        console.log(this.getForReal);
       },
       attached: function(){
         console.log('Our app is ready to rock!');
         if (!this.route.path) {
           this.set('route.path', '/art/list');
         }
+        console.log(this.getForReal);
       },
       getViewport: function() {
       // http://andylangton.co.uk/articles/javascript/get-viewport-size-javascript/

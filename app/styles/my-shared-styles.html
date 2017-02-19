@@ -1,0 +1,51 @@
+<!doctype html>
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/paper-styles/typography.html">
+
+<dom-module id="my-shared-styles">
+<template>
+
+  <style is="custom-style">
+    @font-face {
+        font-family: 'arizoniaregular';
+        src: url('../fonts/arizonafont/arizonia-regular-webfont.woff2') format('woff2'),
+             url('../fonts/arizonafont/arizonia-regular-webfont.woff') format('woff');
+        font-weight: normal;
+        font-style: normal;
+    }
+    #companyname {
+      display:block;
+      position: fixed;
+      z-index:109 !important;
+      top:0px;
+      left:0px;
+      border:solid red 3px;
+      width: 100%;
+      height:42px;
+      margin-top:10.24px;
+      margin-bottom:10.24px;
+      font-family: 'arizoniaregular';
+      font: 40px 'arizoniaregular', Helvetica, sans-serif;
+      font-weight: 100;
+      color: #4c4c4c;
+      background-color: rgba(255, 255, 255, .4);
+      height:auto;
+    }
+
+    body {
+      display:block;
+      height:auto;
+    }
+    body:after{
+      display:block;
+      clear:both;
+      position:relative;
+    }
+    .space {
+      @apply(--layout-flex);
+    }
+
+
+  </style>
+  </template>
+</dom-module>

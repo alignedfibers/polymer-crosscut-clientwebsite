@@ -1,6 +1,6 @@
 ## REWRITE DEFAULTS ###
 RewriteEngine On
-RewriteBase /
+RewriteBase /stage
 SetEnv is_special foobar
 
 AddType application/x-httpd-php .htm

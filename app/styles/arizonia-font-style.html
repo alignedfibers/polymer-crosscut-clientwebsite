@@ -1,0 +1,50 @@
+<!doctype html>
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/paper-styles/typography.html">
+
+<dom-module id="arizonia-font-style">
+<template>
+
+  <style is="custom-style">
+    /*@font-face {
+      font-family: 'Arizonia';
+      src: local('Arizonia'), local('Arizonia-Regular'), url(../fonts/arizonafont/Arizonia-Regular.ttf) format('truetype');
+    }*/
+    /* latin */
+/*@font-face {
+  font-family: 'Arizonia';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Arizonia'), local('Arizonia-Regular'), url(../fonts/arizonafont/Arizonia-Regular.woff2) format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2212, U+2215;
+}*/
+@font-face {
+    font-family: 'arizoniaregular';
+    src: url('../fonts/arizonafont/arizonia-regular-webfont.woff2') format('woff2'),
+         url('../fonts/arizonafont/arizonia-regular-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+    #companyname {
+
+      display:block;
+      position: fixed;
+      z-index:109 !important;
+      top:0px;
+      left:0px;
+      border:solid red 3px;
+      width: -webkit-calc(100% - 0px);
+      width:calc(100% - 0px);
+      height:42px;
+      margin-top:10.24px;
+      margin-bottom:10.24px;
+      font-family: 'arizoniaregular';
+      font: 40px 'arizoniaregular', Helvetica, sans-serif;
+      font-weight: 100;
+      color: #4c4c4c;
+      background-color: rgba(255, 255, 255, .4);
+      height:auto;
+    }
+  </style>
+  </template>
+</dom-module>
