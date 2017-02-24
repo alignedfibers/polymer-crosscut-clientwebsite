@@ -23,13 +23,14 @@
 define('DB_NAME', 'wordpress');
 
 /** MySQL database username */
-define('DB_USER', 'pressadmin');
-
+/*define('DB_USER', 'pressadmin');*/
+define('DB_USER', 'root');
 /** MySQL database password */
-define('DB_PASSWORD', 'PressAdmin_2945760');
-
+/*define('DB_PASSWORD', 'PressAdmin_2945760');*/
+define('DB_PASSWORD', '...///:::123abcABC');
 /** MySQL hostname */
 define('DB_HOST', 'localhost');
+define('FS_METHOD','direct');
 define('CONCATENATE_SCRIPTS', false);
 
 /** Database Charset to use in creating database tables. */
